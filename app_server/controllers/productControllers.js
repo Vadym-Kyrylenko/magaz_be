@@ -22,7 +22,7 @@ module.exports.postProducts = function (req, res) {
     if (!req.body) {
         return res.status(400).send("No request body");
     }
-    if (!(req.body.name && req.body.article &&(req.body.priceUah || req.body.priceUsd) && req.body.description && req.body.category)) {
+    if (!(req.body.name && req.body.article &&(req.body.priceUah || req.body.priceUsd) && req.body.description && req.body.category && req.body.imgSrc)) {
         console.log("No request body2");
         return res.status(400).send("No request body2");
     }
@@ -36,6 +36,7 @@ module.exports.postProducts = function (req, res) {
             description: req.body.description,
             article: req.body.article,
             category: req.body.category,
+            imgSrc: req.body.imgSrc
         };
 
     Product
@@ -54,7 +55,7 @@ module.exports.putProducts = function (req, res) {
         return res.status(400).send("No request body._id");
     }
 
-    if (!(req.body.name && req.body.article &&(req.body.priceUah || req.body.priceUsd) && req.body.description && req.body.category)) {
+    if (!(req.body.name && req.body.article &&(req.body.priceUah || req.body.priceUsd) && req.body.description && req.body.category && req.body.imgSrc)) {
         console.log("No request body3");
         return res.status(400).send("No request body3");
     }
@@ -69,6 +70,7 @@ module.exports.putProducts = function (req, res) {
         description: req.body.description,
         article: req.body.article,
         category: req.body.category,
+        imgSrc: req.body.imgSrc
     };
     Product
         .findByIdAndUpdate(id, newProduct, {new: true}, function (err, product) {
