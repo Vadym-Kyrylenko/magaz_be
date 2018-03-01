@@ -18,7 +18,6 @@ let productSchema = new mongoose.Schema({
         required: true
     },
     price: {
-       // type: Number
         priceUah: {
             type: Number,
             /*required: true*/
@@ -37,10 +36,13 @@ let productSchema = new mongoose.Schema({
     category: {
         type: String
     },
+    imgSrc: {
+        type: String
+    }
 });
 
 let orderSchema = new mongoose.Schema({
-    name: {
+    nameCustomer: {
         type: String,
         required: true
     },
@@ -52,9 +54,36 @@ let orderSchema = new mongoose.Schema({
         type: String,
         // required: true
     },
-    text: {
+    textOrder: {
         type: String
     },
+
+    name: {
+        type: String,
+        required: true
+    },
+    price: {
+        priceUah: {
+            type: Number,
+            /*required: true*/
+        },
+        priceUsd: {
+            type: Number,
+            /*required: true*/
+        },
+    },
+    description: {
+        type: String
+    },
+    article: {
+        type: String
+    },
+    category: {
+        type: String
+    },
+    imgSrc: {
+        type: String
+    }
 });
 
 module.exports.User = mongoose.model('User', userSchema);
