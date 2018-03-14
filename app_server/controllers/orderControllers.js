@@ -16,7 +16,6 @@ module.exports.getOrders = function (req, res) {
             if (orders.length === 0) {
                 return res.status().send("There are no orders");
             }
-            console.log(orders);
             res.status(200).send(orders);
         });
 };
@@ -25,7 +24,6 @@ module.exports.postOrders = function (req, res) {
     if (!req.body) {
         return res.status(400).send("No request body");
     }
-
 
     if (!(req.body.nameCustomer && req.body.email && req.body.phone && req.body.textOrder && req.body.name
             && req.body.article && (req.body.price.priceUah || req.body.price.priceUsd) && req.body.description
@@ -45,6 +43,7 @@ module.exports.postOrders = function (req, res) {
             {
                 priceUah: req.body.price.priceUah,
                 priceUsd: req.body.price.priceUsd,
+                cursUsd: req.body.price.cursUsd
             },
         description: req.body.description,
         article: req.body.article,
@@ -55,7 +54,7 @@ module.exports.postOrders = function (req, res) {
         '<br>С ледующим коментарием: ' + req.body.textOrder + '</p>';
 
     Order
-        .create(newOrder, function (err, orders) {
+        .create(newOrder, function (err, order) {
             if (!err) {
                 let confirmation = {
                     // mail: ,
@@ -67,14 +66,14 @@ module.exports.postOrders = function (req, res) {
                     if (error) {
                         console.log(error.message);
                     }
-                    // console.log('Confirmation message sent to: ', user.eMail);
+                    console.log('Confirmation message sent');
                 });
-                return res.status(201).send(orders);
-                console.log("Created order: " + orders);
+                return res.status(201).send({order: order, message: 'Order saved'});
+                console.log("Created order: " + order);
 
             } else {
                 console.log(err.message);
-                res.status(409).send("Order not created");
+                res.status(409).send({message: 'Order not created'});
             }
         });
 };
@@ -100,7 +99,8 @@ module.exports.putOrders = function (req, res) {
         price:
             {
                 priceUah: req.body.priceUah,
-                priceUsd: req.body.priceUsd
+                priceUsd: req.body.priceUsd,
+                cursUsd: req.body.price.cursUsd
             },
         description: req.body.description,
         article: req.body.article,
@@ -118,22 +118,39 @@ module.exports.putOrders = function (req, res) {
 };
 
 module.exports.deleteOrders = function (req, res) {
-    if (!req.body._id) {
-        return res.status(400).send("No request body._id");
+
+    if (!req.params.idOfOrder) {
+        return res.status(400).send("No request params.idOfOrder");
     }
-    let id = req.body._id;
+    let id = req.params.idOfOrder;
+    console.log(id);
     Order
-        .findByIdAndRemove(id, function (err, order) {
-            if (!err) {
-                res.status(204).send("Removed order");
-                console.log("Removed order: " + order);
-            } else {
-                res.status(304).send ("Failed to delete");
-            }
+        .findByIdAndRemove(id)
+        .then(function (order) {
+            Order
+                .find({})
+                .then(function (orders) {
+                    if (!orders) {
+                        return res.status(404).send({orderDeleted: true, ordersFound: false});
+                    }
+                    if (orders.length === 0) {
+                        return res.status().send({orderDeleted: true, ordersFound: true, ordersLength: false});
+                    }
+                    res.status(200).send({orderDeleted: true, ordersFound: true, orders: orders});
+                })
+                .catch(function(err) {
+                    if (err) {
+                        return res.status(500).send("Error while finding orders");
+                    }
+                });
+            console.log("Removed order: " + order);
+        })
+        .catch(function (err) {
+            res.status(304).send (err.message);
         })
 };
 
-module.exports.getOneOrder = function (req, res) {
+/*module.exports.getOneOrder = function (req, res) {
     let id = req.params.idOfOrder;
     Order
         .findById(id, function (err, orders) {
@@ -144,4 +161,4 @@ module.exports.getOneOrder = function (req, res) {
                 res.status(400).send("Order not found (OneOrder)")
             }
         });
-};
+};*/

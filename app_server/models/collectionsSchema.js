@@ -1,17 +1,5 @@
 const mongoose = require ('mongoose');
 
-let userSchema = new mongoose.Schema({
-    login: {
-        type: String,
-        unique: true,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    }
-});
-
 let productSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -19,13 +7,14 @@ let productSchema = new mongoose.Schema({
     },
     price: {
         priceUah: {
-            type: Number,
-            /*required: true*/
+            type: Number
         },
         priceUsd: {
-            type: Number,
-            /*required: true*/
+            type: Number
         },
+        cursUsd: {
+            type: Number
+        }
     },
     description: {
         type: String
@@ -51,7 +40,7 @@ let orderSchema = new mongoose.Schema({
         required: true
     },
     phone: {
-        type: Number,
+        type: String,
         // required: true
     },
     textOrder: {
@@ -64,13 +53,14 @@ let orderSchema = new mongoose.Schema({
     },
     price: {
         priceUah: {
-            type: Number,
-            /*required: true*/
+            type: Number
         },
         priceUsd: {
-            type: Number,
-            /*required: true*/
+            type: Number
         },
+        cursUsd: {
+            type: Number
+        }
     },
     description: {
         type: String
@@ -86,6 +76,6 @@ let orderSchema = new mongoose.Schema({
     }
 });
 
-module.exports.User = mongoose.model('User', userSchema);
+
 module.exports.Product = mongoose.model('Product', productSchema);
 module.exports.Order = mongoose.model('Order', orderSchema);
