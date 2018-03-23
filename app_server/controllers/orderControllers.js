@@ -24,20 +24,17 @@ module.exports.postOrders = function (req, res) {
     if (!req.body) {
         return res.status(400).send("No request body");
     }
-
     if (!(req.body.nameCustomer && req.body.email && req.body.phone && req.body.textOrder && req.body.name
             && req.body.article && (req.body.price.priceUah || req.body.price.priceUsd) && req.body.description
             && req.body.category && req.body.imgSrc)) {
         console.log("No request body2");
         return res.status(400).send("No request body2");
     }
-    // let newOrder = req.body.order;
     let newOrder = {
         nameCustomer: req.body.nameCustomer,
         email: req.body.email,
         phone: req.body.phone,
         textOrder: req.body.textOrder,
-
         name: req.body.name,
         price:
             {
@@ -61,7 +58,6 @@ module.exports.postOrders = function (req, res) {
                     subject: 'newOrder',
                     message: orderMessage,
                 };
-
                 transporter.sendMail(regConfirmationEmail(confirmation), function (error, info) {
                     if (error) {
                         console.log(error.message);
@@ -76,45 +72,6 @@ module.exports.postOrders = function (req, res) {
                 res.status(409).send({message: 'Order not created'});
             }
         });
-};
-
-module.exports.putOrders = function (req, res) {
-    if (!req.body._id) {
-        return res.status(400).send("No request body._id");
-    }
-
-    if (!(req.body.nameCustomer && req.body.email && req.body.phone && req.body.textOrder) &&
-        !(req.body.name && req.body.article &&(req.body.priceUah || req.body.priceUsd) && req.body.description && req.body.category && req.body.imgSrc)) {
-        console.log("No request body3");
-        return res.status(400).send("No request body3");
-    }
-    let id = req.body._id;
-    let newOrder = {
-        nameCustomer: req.body.nameCustomer,
-        email: req.body.email,
-        phone: req.body.phone,
-        textOrder: req.body.textOrder,
-
-        name: req.body.name,
-        price:
-            {
-                priceUah: req.body.priceUah,
-                priceUsd: req.body.priceUsd,
-                cursUsd: req.body.price.cursUsd
-            },
-        description: req.body.description,
-        article: req.body.article,
-        category: req.body.category
-    };
-    Order
-        .findByIdAndUpdate(id, newOrder, {new: true}, function (err, order) {
-            if (!err){
-                return res.send(order);
-            } else {
-                /* res.status(304);*/
-                res.send("Failed to update");
-            }
-        })
 };
 
 module.exports.deleteOrders = function (req, res) {

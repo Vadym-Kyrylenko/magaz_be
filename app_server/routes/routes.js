@@ -15,7 +15,6 @@ router.delete('/products/:idOfProduct', auth, productControllers.deleteProducts)
 
 router.get('/orders', auth, orderControllers.getOrders);
 router.post('/orders', auth, orderControllers.postOrders);
-router.put('/orders', auth, orderControllers.putOrders);
 router.delete('/orders/:idOfOrder', auth, orderControllers.deleteOrders);
 //router.get('/orders/:idOfOrder', orderControllers.getOneOrder);
 

@@ -16,7 +16,7 @@ module.exports.getProducts = function (req, res) {
             console.log(products);
             res.status(200).send(products);
         });
-;};
+};
 
 module.exports.postProducts = function (req, res) {
     if (!req.body) {
@@ -42,13 +42,13 @@ module.exports.postProducts = function (req, res) {
         };
             console.log(newProduct);
     Product
-        .create(newProduct, function (err, products) {
+        .create(newProduct, function (err, product) {
             if (!err) {
 
-                return res.status(201).send(products);
-                console.log("Created product: " + products);
+                return res.status(201).send({product: product, message: 'Product saved'});
+                console.log("Created product: " + product);
             } else {
-                res.status(409).send("Product not created");
+                res.status(409).send({message: 'Product not created'});
             }
         });
 };
@@ -57,8 +57,7 @@ module.exports.putProducts = function (req, res) {
     if (!req.body._id) {
         return res.status(400).send("No request body._id");
     }
-
-    if (!(req.body.name && req.body.article &&(req.body.priceUah || req.body.priceUsd) && req.body.description && req.body.category && req.body.imgSrc)) {
+    if (!(req.body.name && req.body.article &&(req.body.price.priceUah || req.body.price.priceUsd) && req.body.description && req.body.category && req.body.imgSrc)) {
         console.log("No request body3");
         return res.status(400).send("No request body3");
     }
@@ -67,8 +66,8 @@ module.exports.putProducts = function (req, res) {
         name: req.body.name,
         price:
             {
-                priceUah: req.body.priceUah,
-                priceUsd: req.body.priceUsd,
+                priceUah: req.body.price.priceUah,
+                priceUsd: req.body.price.priceUsd,
                 cursUsd: req.body.price.cursUsd
             },
         description: req.body.description,
@@ -79,10 +78,10 @@ module.exports.putProducts = function (req, res) {
     Product
         .findByIdAndUpdate(id, newProduct, {new: true}, function (err, product) {
             if (!err){
-                return res.send(product);
+                return res.send({product: product, message: 'Product edited'});
             } else {
                /* res.status(304);*/
-                res.send("Failed to update");
+                res.send({message: 'Product not edited'});
             }
         })
 };
@@ -119,20 +118,6 @@ module.exports.deleteProducts = function (req, res) {
         .catch(function (err) {
             res.status(304).send (err.message);
         })
-    /*if (!req.body._id) {
-        return res.status(400).send("No request body._id");
-    }
-    console.log(req.body._id);
-    let id = req.body._id;
-    Product
-        .findByIdAndRemove(id, function (err, product) {
-            if (!err) {
-                res.status(204).send("Removed product");
-                console.log("Removed product: " + product);
-            } else {
-                res.status(304).send ("Failed to delete");
-            }
-        })*/
 };
 
 module.exports.getOneProduct = function (req, res) {
