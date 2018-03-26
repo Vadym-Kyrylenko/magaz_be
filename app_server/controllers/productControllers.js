@@ -33,7 +33,7 @@ module.exports.postProducts = function (req, res) {
                 {
                     priceUah: req.body.price.priceUah,
                     priceUsd: req.body.price.priceUsd,
-                    cursUsd: req.body.price.cursUsd
+                    rateUsd: req.body.price.rateUsd
                 },
             description: req.body.description,
             article: req.body.article,
@@ -68,7 +68,7 @@ module.exports.putProducts = function (req, res) {
             {
                 priceUah: req.body.price.priceUah,
                 priceUsd: req.body.price.priceUsd,
-                cursUsd: req.body.price.cursUsd
+                rateUsd: req.body.price.rateUsd
             },
         description: req.body.description,
         article: req.body.article,
@@ -80,7 +80,6 @@ module.exports.putProducts = function (req, res) {
             if (!err){
                 return res.send({product: product, message: 'Product edited'});
             } else {
-               /* res.status(304);*/
                 res.send({message: 'Product not edited'});
             }
         })
@@ -132,3 +131,4 @@ module.exports.getOneProduct = function (req, res) {
             }
         });
 };
+

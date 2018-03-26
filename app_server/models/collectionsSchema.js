@@ -12,7 +12,7 @@ let productSchema = new mongoose.Schema({
         priceUsd: {
             type: Number
         },
-        cursUsd: {
+        rateUsd: {
             type: Number
         }
     },
