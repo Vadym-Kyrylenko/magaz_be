@@ -6,6 +6,7 @@ const productControllers = require('../controllers/productControllers');
 const orderControllers = require('../controllers/orderControllers');
 const userAuth = require('../controllers/userAuthentication');
 const rateControllers = require('../controllers/rateControllers');
+const userControllers = require('../controllers/userControllers');
 
 router.get('/products', productControllers.getProducts);
 router.post('/products', auth, productControllers.postProducts);
@@ -16,7 +17,7 @@ router.put('/products/:currentRate', rateControllers.putRateProducts);
 // router.get('/products/:idOfProduct', productControllers.getOneProduct);
 
 router.get('/orders', auth, orderControllers.getOrders);
-router.post('/orders', auth, orderControllers.postOrders);
+router.post('/orders', auth, userControllers.getAllEmails, orderControllers.postOrders);
 router.delete('/orders/:idOfOrder', auth, orderControllers.deleteOrders);
 //router.get('/orders/:idOfOrder', orderControllers.getOneOrder);
 
