@@ -11,7 +11,7 @@ module.exports.getProducts = function (req, res) {
                 return res.status(404).send("Not found products");
             }
             if (products.length === 0) {
-                return res.status().send("There are no products");
+                return res.send("There are no products");
             }
             console.log(products);
             res.status(200).send(products);
