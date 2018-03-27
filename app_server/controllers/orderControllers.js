@@ -14,7 +14,7 @@ module.exports.getOrders = function (req, res) {
                 return res.status(404).send("Not found orders");
             }
             if (orders.length === 0) {
-                return res.status().send("There are no orders");
+                return res.send("There are no orders");
             }
             res.status(200).send(orders);
         });
@@ -40,7 +40,7 @@ module.exports.postOrders = function (req, res) {
             {
                 priceUah: req.body.price.priceUah,
                 priceUsd: req.body.price.priceUsd,
-                cursUsd: req.body.price.cursUsd
+                rateUsd: req.body.price.rateUsd
             },
         description: req.body.description,
         article: req.body.article,

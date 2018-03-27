@@ -1,5 +1,5 @@
 const mongoose = require ('mongoose');
-const dbURI = 'mongodb://localhost:27017/magaz';
+const dbURI = 'mongodb://localhost:27018/magaz';
 mongoose.connect(dbURI);
 
 mongoose.connection.on('connected', function(){
