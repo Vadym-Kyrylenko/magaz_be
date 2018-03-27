@@ -13,7 +13,6 @@ module.exports.getProducts = function (req, res) {
             if (products.length === 0) {
                 return res.send("There are no products");
             }
-            console.log(products);
             res.status(200).send(products);
         });
 };
