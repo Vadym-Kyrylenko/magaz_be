@@ -1,3 +1,5 @@
+'use strict';
+
 const User = require('../models/users').User;
 
 module.exports.getUsers = function (req, res) {
@@ -11,12 +13,12 @@ module.exports.getUsers = function (req, res) {
                 return res.status(404).send("Not found users");
             }
             if (users.length === 0) {
-                return res.status().send("There are no users");
+                return res.send("There are no users");
             }
             console.log(users);
             res.status(200).send(users);
         });
-    ;};
+};
 
 module.exports.registerUsers = function (req, res) {
     if (!req.body) {
@@ -40,8 +42,8 @@ module.exports.registerUsers = function (req, res) {
         .create(newUser, function (err, user) {
             if (!err) {
 
-                return res.status(201).send(user);
                 console.log("Created user: " + user);
+                return res.status(201).send(user);
             } else {
                 res.status(409).send("User not created");
             }
@@ -120,5 +122,32 @@ module.exports.getOneUser = function (req, res) {
             } else {
                 res.status(400).send("User not found (OneUser)")
             }
+        });
+};
+
+module.exports.getAllEmails = function (req, res, next) {
+    User
+        .find({})
+        .then(function (users) {
+            if (!users) {
+                console.log('No admins');
+                req.adminsEmails = [];
+                next();
+            }
+            if (users.length === 0) {
+                console.log('No admins');
+                req.adminsEmails = [];
+                next();
+            }
+            req.adminsEmails = users.map(function(user) {
+                return user.email;
+            });
+            next();
+        })
+        .catch(function (err) {
+            console.log('Error while finding admins');
+            console.log(err);
+            req.adminsEmails = [];
+            next();
         });
 };

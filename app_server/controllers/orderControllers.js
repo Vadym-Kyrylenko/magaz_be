@@ -24,13 +24,14 @@ module.exports.postOrders = function (req, res) {
     if (!req.body) {
         return res.status(400).send("No request body");
     }
+    const admins = req.adminsEmails;
     if (!(req.body.nameCustomer && req.body.email && req.body.phone && req.body.textOrder && req.body.name
             && req.body.article && (req.body.price.priceUah || req.body.price.priceUsd) && req.body.description
             && req.body.category && req.body.imgSrc)) {
         console.log("No request body2");
         return res.status(400).send("No request body2");
     }
-    let newOrder = {
+    const newOrder = {
         nameCustomer: req.body.nameCustomer,
         email: req.body.email,
         phone: req.body.phone,
@@ -47,25 +48,29 @@ module.exports.postOrders = function (req, res) {
         category: req.body.category,
         imgSrc: req.body.imgSrc
     };
-    let orderMessage = '<p>Поступил заказ на ' + req.body.name +  '<br>артикул: ' + req.body.article +
+    const orderMessage = '<p>Поступил заказ на ' + req.body.name +  '<br>артикул: ' + req.body.article +
         '<br>С ледующим коментарием: ' + req.body.textOrder + '</p>';
 
     Order
         .create(newOrder, function (err, order) {
             if (!err) {
-                let confirmation = {
-                    // mail: ,
+                const confirmation = {
+                    mail: '',
                     subject: 'newOrder',
-                    message: orderMessage,
+                    message: orderMessage
                 };
-                transporter.sendMail(regConfirmationEmail(confirmation), function (error, info) {
-                    if (error) {
-                        console.log(error.message);
-                    }
-                    console.log('Confirmation message sent');
+
+                admins.forEach(function(email) {
+                    confirmation.mail = email;
+                    transporter.sendMail(regConfirmationEmail(confirmation), function (error, info) {
+                        if (error) {
+                            console.log(error.message);
+                        }
+                        console.log('Confirmation message sent');
+                    });
                 });
-                return res.status(201).send({order: order, message: 'Order saved'});
                 console.log("Created order: " + order);
+                return res.status(201).send({order: order, message: 'Order saved'});
 
             } else {
                 console.log(err.message);
