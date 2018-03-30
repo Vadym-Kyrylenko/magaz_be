@@ -1,20 +1,21 @@
 'use strict';
+const appconst = require('./app_server/config/constants').APPCONST;
 
 var mongoose = require("mongoose");
-var dbUrl = 'mongodb://localhost:27018/magaz';
+// var dbUrl = 'mongodb://localhost:27018/magaz';
 var productsArr = require('./seed/ProductsSeed');
 var models = require('./app_server/models/collectionsSchema');
 
 (function () {
-    var options = {
+    /*var options = {
         promiseLibrary: global.Promise,
         reconnectTries: Number.MAX_VALUE,
         reconnectInterval: 1000,
         native_parser: true
-    };
-    mongoose.connect(dbUrl, options);
+    };*/
+    mongoose.connect(appconst.dbUrl, appconst.mongoose);
     mongoose.connection.on('connected', function () {
-        console.log('Mongoose connected to ' + dbUrl);
+        console.log('Mongoose connected to ' + appconst.dbUrl);
         try {
             mongoose.connection.dropDatabase()
                 .then(function() { console.log('DB dropped');})
