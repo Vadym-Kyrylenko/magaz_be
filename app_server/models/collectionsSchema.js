@@ -20,12 +20,16 @@ let productSchema = new mongoose.Schema({
         type: String
     },
     article: {
-        type: String
+        type: String,
+        unique: true
     },
     category: {
         type: String
     },
     imgSrc: {
+        type: String
+    },
+    bufferImg: {
         type: String
     }
 });
@@ -71,7 +75,7 @@ let orderSchema = new mongoose.Schema({
     category: {
         type: String
     },
-    imgSrc: {
+    bufferImg:{
         type: String
     }
 });

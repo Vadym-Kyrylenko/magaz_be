@@ -1,6 +1,5 @@
 const appconst = require('../config/constants').APPCONST;
 const mongoose = require ('mongoose');
-// const dbURI = 'mongodb://18.218.221.213:27017/magaz';
 mongoose.connect(appconst.dbUrl, appconst.mongoose);
 
 mongoose.connection.on('connected', function(){

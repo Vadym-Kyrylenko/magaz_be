@@ -26,23 +26,3 @@ module.exports.regConfirmationEmail = function (data) {
         attachments: []
     };
 };
-
-/*
-// потом я заимпортил их в контроллер
-let transporter = mailModule.transporter;
-let regConfirmationEmail = mailModule.regConfirmationEmail;
-
-// в самом контроллере определяешь переменную
-let confirmation = {
-  mail:  ,
-  subject: '',
-  message: '',
-};
-
-transporter.sendMail(regConfirmationEmail(confirmation), function (error, info) {
-  if (error) {
-    console.log(error);
-  }
-  console.log('Confirmation message sent to: ', user.eMail);
-});
-*/
