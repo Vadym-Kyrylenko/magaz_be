@@ -1,6 +1,6 @@
 const mongoose = require ('mongoose');
 
-let productSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -34,7 +34,7 @@ let productSchema = new mongoose.Schema({
     }
 });
 
-let orderSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema({
     nameCustomer: {
         type: String,
         required: true
@@ -76,6 +76,9 @@ let orderSchema = new mongoose.Schema({
         type: String
     },
     bufferImg:{
+        type: String
+    },
+    imgSrc: {
         type: String
     }
 });
