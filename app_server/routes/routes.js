@@ -7,6 +7,8 @@ const orderControllers = require('../controllers/orderControllers');
 const userAuth = require('../controllers/userAuthentication');
 const rateControllers = require('../controllers/rateControllers');
 const userControllers = require('../controllers/userControllers');
+var multer  = require('multer')
+var upload = multer()
 
 router.get('/products', productControllers.getProducts);
 router.post('/products', auth, productControllers.postProducts);
@@ -14,6 +16,7 @@ router.put('/products', auth, productControllers.putProducts);
 router.delete('/products/:idOfProduct', auth, productControllers.deleteProducts);
 router.put('/products/:currentRate', rateControllers.putRateProducts);
 
+router.post('/productsandimg', upload.any(), auth, productControllers.postImg);
 // router.get('/products/:idOfProduct', productControllers.getOneProduct);
 
 router.get('/orders', auth, orderControllers.getOrders);

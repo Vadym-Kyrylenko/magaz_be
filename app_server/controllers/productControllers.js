@@ -1,5 +1,9 @@
 const Product = require('../models/collectionsSchema').Product;
 
+var fs = require("fs");
+
+
+
 module.exports.getProducts = function (req, res) {
     Product
         .find({})
@@ -17,12 +21,28 @@ module.exports.getProducts = function (req, res) {
         });
 };
 
+module.exports.postImg = function (req, res) {
+    let buffer = req.files[0].buffer;
+    let article = req.files[0].fieldname;
+    let bufferString = JSON.stringify(buffer)
+    console.log(bufferString);
+    Product
+        .findOneAndUpdate({article: article},{ $set: { bufferImg: bufferString }},{new: true}, function (err, products) {
+            if (!err) {
+                console.log(products);
+                res.status(200).send(products);
+            } else {
+                res.status(400).send("Product not found (OneProduct)")
+            }
+        });
+};
 module.exports.postProducts = function (req, res) {
+
     if (!req.body) {
         return res.status(400).send("No request body");
     }
-    console.log(req.body);
-    if (!(req.body.name && req.body.article &&(req.body.price.priceUah || req.body.price.priceUsd) && req.body.description && req.body.category && req.body.imgSrc)) {
+
+    if (!(req.body.name && req.body.article &&(req.body.price.priceUah || req.body.price.priceUsd) && req.body.description && req.body.category)) {
         console.log("No request body2 product");
         return res.status(400).send("No request body2 product");
     }
@@ -39,7 +59,7 @@ module.exports.postProducts = function (req, res) {
             category: req.body.category,
             imgSrc: req.body.imgSrc
         };
-            console.log(newProduct);
+            // console.log(newProduct);
     Product
         .create(newProduct, function (err, product) {
             if (!err) {
@@ -53,10 +73,11 @@ module.exports.postProducts = function (req, res) {
 };
 
 module.exports.putProducts = function (req, res) {
+
     if (!req.body._id) {
         return res.status(400).send("No request body._id");
     }
-    if (!(req.body.name && req.body.article &&(req.body.price.priceUah || req.body.price.priceUsd) && req.body.description && req.body.category && req.body.imgSrc)) {
+    if (!(req.body.name && req.body.article &&(req.body.price.priceUah || req.body.price.priceUsd) && req.body.description && req.body.category)) {
         console.log("No request body3");
         return res.status(400).send("No request body3");
     }
@@ -72,7 +93,6 @@ module.exports.putProducts = function (req, res) {
         description: req.body.description,
         article: req.body.article,
         category: req.body.category,
-        imgSrc: req.body.imgSrc
     };
     Product
         .findByIdAndUpdate(id, newProduct, {new: true}, function (err, product) {
@@ -85,8 +105,6 @@ module.exports.putProducts = function (req, res) {
 };
 
 module.exports.deleteProducts = function (req, res) {
-    console.log(req);
-    console.log(req.params);
     if (!req.params.idOfProduct) {
         return res.status(400).send("No request params.idOfProduct");
     }
@@ -130,4 +148,5 @@ module.exports.getOneProduct = function (req, res) {
             }
         });
 };
+
 

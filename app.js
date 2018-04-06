@@ -1,4 +1,5 @@
 require('dotenv').load();
+var path = require("path");
 const cors = require('cors');
 const passport = require('passport');
 const bodyParser = require('body-parser');
@@ -7,6 +8,8 @@ const routes = require('./app_server/routes/routes');
 require('./app_server/config/passport');
 const express = require ('express');
 const app = express();
+var multiparty = require('multiparty');
+
 
 app.use(cors());
 
