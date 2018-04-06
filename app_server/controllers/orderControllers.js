@@ -34,10 +34,11 @@ module.exports.postOrders = function (req, res) {
         return res.status(400).send("No request body2");
     }
 
-    let id = req.body._id;
+    const id = req.body._id;
     Product
         .findById(id, function (err, product) {
-            this.bufIm = product.bufferImg;
+            // this.bufIm = product.bufferImg;
+            this.imgSrc = product.imgSrc;
             const newOrder = {
                 nameCustomer: req.body.nameCustomer,
                 email: req.body.email,
@@ -53,7 +54,7 @@ module.exports.postOrders = function (req, res) {
                 description: req.body.description,
                 article: req.body.article,
                 category: req.body.category,
-                bufferImg: this.bufIm
+                imgSrc: this.imgSrc
             };
 
             const orderMessage = '<p>Поступил заказ на ' + req.body.name + '<br>артикул: ' + req.body.article +
