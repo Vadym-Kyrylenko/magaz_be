@@ -1,19 +1,21 @@
 require('dotenv').load();
-var path = require("path");
+const path = require("path");
 const cors = require('cors');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 require('./app_server/models/db');
 const routes = require('./app_server/routes/routes');
-require('./app_server/config/passport');
+require('./config/passport');
 const express = require ('express');
 const app = express();
-var multiparty = require('multiparty');
+const multiparty = require('multiparty');
+const appconst = require('./config/constants').APPCONST;
 
 
 app.use(cors());
+app.use(express.static('public'));
 
-let jsonParser = bodyParser.json();
+const jsonParser = bodyParser.json();
 
 app.use(passport.initialize());
 app.use(function (err, req, res, next) {
@@ -26,4 +28,4 @@ app.use(jsonParser);
 app.use('/', routes);
 
 
-app.listen(3000, () => console.log('Server started...'));
+app.listen(appconst.port, () => console.log('Server started at port ' + appconst.port));

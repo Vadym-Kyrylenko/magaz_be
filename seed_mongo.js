@@ -1,5 +1,5 @@
 'use strict';
-const appconst = require('./app_server/config/constants').APPCONST;
+const appconst = require('./config/constants').APPCONST;
 
 var mongoose = require("mongoose");
 // var dbUrl = 'mongodb://localhost:27018/magaz';

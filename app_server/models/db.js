@@ -1,4 +1,4 @@
-const appconst = require('../config/constants').APPCONST;
+const appconst = require('../../config/constants').APPCONST;
 const mongoose = require ('mongoose');
 mongoose.connect(appconst.dbUrl, appconst.mongoose);
 
