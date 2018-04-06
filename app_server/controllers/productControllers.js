@@ -41,7 +41,7 @@ module.exports.postProducts = function (req, res) {
     if (!req.body) {
         return res.status(400).send("No request body");
     }
-
+        console.log(req.body);
     if (!(req.body.name && req.body.article &&(req.body.price.priceUah || req.body.price.priceUsd) && req.body.description && req.body.category)) {
         console.log("No request body2 product");
         return res.status(400).send("No request body2 product");
@@ -57,7 +57,6 @@ module.exports.postProducts = function (req, res) {
             description: req.body.description,
             article: req.body.article,
             category: req.body.category,
-            imgSrc: req.body.imgSrc
         };
             // console.log(newProduct);
     Product
