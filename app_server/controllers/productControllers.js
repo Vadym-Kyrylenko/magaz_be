@@ -22,12 +22,14 @@ module.exports.getProducts = function (req, res) {
 };
 
 module.exports.postImg = function (req, res) {
-    let buffer = req.files[0].buffer;
-    let article = req.files[0].fieldname;
-    let bufferString = JSON.stringify(buffer)
-    console.log(bufferString);
+    const buffer = req.files[0].buffer;
+    const article = req.files[0].fieldname;
+    // const bufferString = JSON.stringify(buffer);
+    // console.log(bufferString);
+    fs.writeFile('./images/' + article + '.jpg', buffer, (err) => console.log(err));
+    const imgPath = 'http://46.172.70.39:5000/images/' + article + '.jpg';
     Product
-        .findOneAndUpdate({article: article},{ $set: { bufferImg: bufferString }},{new: true}, function (err, products) {
+        .findOneAndUpdate({article: article},{ $set: { imgSrc: imgPath }},{new: true}, function (err, products) {
             if (!err) {
                 console.log(products);
                 res.status(200).send(products);
