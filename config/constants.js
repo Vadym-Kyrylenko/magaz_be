@@ -1,8 +1,8 @@
 'use strict';
 
 const appConfig = {
-    // dbUrl: 'mongodb://18.218.221.213:27017/magaz',
-    dbUrl: 'mongodb://localhost:27017/magaz',
+    dbUrl: 'mongodb://18.218.221.213:27017/magaz',
+    // dbUrl: 'mongodb://localhost:27017/magaz',
     port: 3000,
     mongoose: {
         promiseLibrary: global.Promise,
