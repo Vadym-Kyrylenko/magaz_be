@@ -48,7 +48,7 @@ module.exports.postProducts = function (req, res) {
         console.log("No request body2 product");
         return res.status(400).send("No request body2 product");
     }
-        let newProduct = {
+        const newProduct = {
             name: req.body.name,
             price:
                 {
@@ -82,8 +82,8 @@ module.exports.putProducts = function (req, res) {
         console.log("No request body3");
         return res.status(400).send("No request body3");
     }
-    let id = req.body._id;
-    let newProduct = {
+    const id = req.body._id;
+    const newProduct = {
         name: req.body.name,
         price:
             {
@@ -93,7 +93,7 @@ module.exports.putProducts = function (req, res) {
             },
         description: req.body.description,
         article: req.body.article,
-        category: req.body.category,
+        category: req.body.category
     };
     Product
         .findByIdAndUpdate(id, newProduct, {new: true}, function (err, product) {
@@ -109,7 +109,7 @@ module.exports.deleteProducts = function (req, res) {
     if (!req.params.idOfProduct) {
         return res.status(400).send("No request params.idOfProduct");
     }
-    let id = req.params.idOfProduct;
+    const id = req.params.idOfProduct;
     console.log(id);
     Product
         .findByIdAndRemove(id)
