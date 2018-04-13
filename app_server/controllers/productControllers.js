@@ -26,8 +26,8 @@ module.exports.postImg = function (req, res) {
     const article = req.files[0].fieldname;
     // const bufferString = JSON.stringify(buffer);
     // console.log(bufferString);
-    fs.writeFile('./public/images/' + article + '.jpg', buffer, (err) => console.log(err));
-    const imgPath = 'http://46.172.70.39:3000/images/' + article + '.jpg';
+    fs.writeFile('./public/images/' + req.files[0].originalname, buffer, (err) => console.log(err));
+    const imgPath = 'http://46.172.70.39:3000/images/' + req.files[0].originalname;
     Product
         .findOneAndUpdate({article: article},{ $set: { imgSrc: imgPath }},{new: true}, function (err, products) {
             if (!err) {
