@@ -37,8 +37,7 @@ module.exports.registerUser = function (req, res) {
 };
 
 module.exports.loginUser = function (req, res) {
-    console.log(req.headers);
-    console.log(req.body);
+
     if(!req.body.email || !req.body.password) {
         sendJSONresponse(res, 400, {
             "message" : "All fields required (login)"
@@ -50,7 +49,7 @@ module.exports.loginUser = function (req, res) {
         let token;
         if(err) {
             sendJSONresponse(res, 404, err);
-            return
+            return;
         }
         if(user) {
             token = user.generateJwt();

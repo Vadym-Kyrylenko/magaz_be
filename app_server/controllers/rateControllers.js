@@ -1,6 +1,5 @@
 const Product = require('../models/collectionsSchema').Product;
 
-
 module.exports.putRateProducts = function (req, res) {
     if (!req.params.currentRate) {
         return res.status(400).send("No request currentRate");
@@ -16,7 +15,7 @@ module.exports.putRateProducts = function (req, res) {
                     if (item.price.priceUsd === null) {
                         item.price.rateUsd = cursUsd;
                         item.save();
-                    } else if (item.price.priceUsd != null){
+                    } else if (item.price.priceUsd !== null) {
                         console.dir(item.price.priceUah);
                         item.price.priceUah = Math.round(item.price.priceUsd * cursUsd * 100) / 100;
                         item.price.rateUsd = cursUsd;
@@ -26,7 +25,7 @@ module.exports.putRateProducts = function (req, res) {
                 res.send({message: "Rate changed"});
             }
         )
-        .catch()
+        .catch();
 
 }
 ;

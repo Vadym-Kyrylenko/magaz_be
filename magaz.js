@@ -1,5 +1,5 @@
 require('dotenv').load();
-const path = require("path");
+const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
 const bodyParser = require('body-parser');
@@ -8,7 +8,6 @@ const routes = require('./app_server/routes/routes');
 require('./config/passport');
 const express = require ('express');
 const app = express();
-const multiparty = require('multiparty');
 const appconst = require('./config/constants').APPCONST;
 
 

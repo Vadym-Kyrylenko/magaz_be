@@ -75,7 +75,7 @@ module.exports.putUsers = function (req, res) {
             } else {
                 res.send("Failed to update");
             }
-        })
+        });
 };
 
 module.exports.deleteUsers = function (req, res) {
@@ -109,7 +109,7 @@ module.exports.deleteUsers = function (req, res) {
         })
         .catch(function (err) {
             res.status(304).send (err.message);
-        })
+        });
 };
 
 module.exports.getOneUser = function (req, res) {
@@ -120,7 +120,7 @@ module.exports.getOneUser = function (req, res) {
                 console.log(users);
                 res.status(200).send(users);
             } else {
-                res.status(400).send("User not found (OneUser)")
+                res.status(400).send("User not found (OneUser)");
             }
         });
 };
