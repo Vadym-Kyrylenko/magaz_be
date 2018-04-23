@@ -20,10 +20,10 @@ module.exports = [
             rateUsd: 28.5
         },
         name: "wallet_11",
-        description: "Данный кошелек выполнен из высококачественной кожию",
+        description: "Данный кошелек выполнен из высококачественной кожи",
         article: "wallet-011",
         category: "wallet",
-        imgSrc: "http://localhost:4200/assets/wallet/9.jpg",
+        imgSrc: "../../assets/wallet/9.jpg",
     },
     {
         price: {
@@ -143,7 +143,7 @@ module.exports = [
         description: "description",
         article: "TEST",
         category: "TEST",
-        imgSrc: "http://localhost:4200/assets/wallet/9.jpg",
+        imgSrc: "../../assets/wallet/9.jpg",
     }
 
 ];

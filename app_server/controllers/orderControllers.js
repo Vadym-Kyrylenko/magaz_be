@@ -27,9 +27,9 @@ module.exports.postOrders = function (req, res) {
         return res.status(400).send("No request body");
     }
     const admins = req.adminsEmails;
-    if (!(req.body.nameCustomer && req.body.email && req.body.phone && req.body.textOrder && req.body.name
-            && req.body.article && (req.body.price.priceUah || req.body.price.priceUsd) && req.body.description
-            && req.body.category)) {
+    if (!(req.body.nameCustomer && req.body.email && req.body.phone && req.body.textOrder && req.body.name &&
+        req.body.article && (req.body.price.priceUah || req.body.price.priceUsd) && req.body.description &&
+        req.body.category)) {
         console.log("No request body2");
         return res.status(400).send("No request body2");
     }
@@ -37,7 +37,6 @@ module.exports.postOrders = function (req, res) {
     const id = req.body._id;
     Product
         .findById(id, function (err, product) {
-            // this.bufIm = product.bufferImg;
             this.imgSrc = product.imgSrc;
             const newOrder = {
                 nameCustomer: req.body.nameCustomer,
@@ -119,5 +118,5 @@ module.exports.deleteOrders = function (req, res) {
         })
         .catch(function (err) {
             res.status(304).send(err.message);
-        })
+        });
 };
