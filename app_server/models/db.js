@@ -1,9 +1,9 @@
+const appconst = require('../../config/constants').APPCONST;
 const mongoose = require ('mongoose');
-const dbURI = 'mongodb://localhost:27017/magaz';
-mongoose.connect(dbURI);
+mongoose.connect(appconst.dbUrl, appconst.mongoose);
 
 mongoose.connection.on('connected', function(){
-    console.log('Mongoose connected to ' + dbURI);
+    console.log('Mongoose connected to ' + appconst.dbUrl);
 });
 
 mongoose.connection.on('error', function(err){
@@ -14,7 +14,7 @@ mongoose.connection.on('disconnected', function(){
     console.log('Mongoose disconnected');
 });
 
-gracefulShutdown = function (msg, callback) {
+let gracefulShutdown = function (msg, callback) {
     mongoose.connection.close(function () {
         console.log('Mongoose disconnected through ' + msg);
         callback();
