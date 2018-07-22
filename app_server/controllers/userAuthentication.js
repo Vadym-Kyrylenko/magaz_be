@@ -19,18 +19,18 @@ module.exports.registerUser = function (req, res) {
     let user = new User();
     user.name = req.body.name;
     user.email = req.body.email;
-    user.password  = req.body.password;
+    user.password = req.body.password;
 
     user.setPassword(req.body.password);
 
-    user.save(function(err) {
+    user.save(function (err) {
 
         if (err) {
             console.log(err);
             sendJSONresponse(res, 404, err);
         } else {
             sendJSONresponse(res, 200, {
-                success : true
+                success: true
             });
         }
     });
@@ -38,23 +38,23 @@ module.exports.registerUser = function (req, res) {
 
 module.exports.loginUser = function (req, res) {
 
-    if(!req.body.email || !req.body.password) {
+    if (!req.body.email || !req.body.password) {
         sendJSONresponse(res, 400, {
-            "message" : "All fields required (login)"
+            "message": "All fields required (login)"
         });
         return;
     }
 
     passport.authenticate('local', function (err, user, info) {
         let token;
-        if(err) {
+        if (err) {
             sendJSONresponse(res, 404, err);
             return;
         }
-        if(user) {
+        if (user) {
             token = user.generateJwt();
             sendJSONresponse(res, 200, {
-                'token' : token
+                'token': token
             });
         } else {
             sendJSONresponse(res, 401, info);

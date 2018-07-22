@@ -1,9 +1,9 @@
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 
-// const ADMIN_GMAIL = 'kyrylenko.vadym@gmail.com';
-const MAIL_GMAIL = 'test.email.kaa@gmail.com';
-const MAIL_PASSWORD = 'qwe123456qwe';
+// const ADMIN_GMAIL = process.env.ADMIN_GMAIL;
+const MAIL_GMAIL = process.env.MAIL_GMAIL;
+const MAIL_PASSWORD = process.env.MAIL_PASSWORD;
 
 module.exports.transporter = nodemailer.createTransport(smtpTransport({
     service: 'Gmail',
